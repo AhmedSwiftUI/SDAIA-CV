@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_40c43cc9aba73241cfce488b1cb1c296 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.css"/>
+</head>
+<body>
+    
+    
+    <div style="position:fixed;bottom:30px;left:30px;z-index:9999;
+                background:white;padding:14px 18px;border-radius:10px;
+                border:2px solid #ccc;font-family:Arial;font-size:13px;
+                box-shadow:2px 2px 6px rgba(0,0,0,0.2)">
+        <div dir="rtl">
+        <b style="font-size:15px">📍 مفتاح الخريطة</b><br><br>
+        🔴 موقع الحادث<br>
+        🟠 منطقة التنبيه (1 كم)<br>
+        🚗 سائق تم تنبيهه<br>
+        🚑 الإسعاف (في الطريق)<br>
+        🚔 المرور (في الطريق)
+        </div>
+    </div>
+    
+            <div class="folium-map" id="map_40c43cc9aba73241cfce488b1cb1c296" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_40c43cc9aba73241cfce488b1cb1c296 = L.map(
+                "map_40c43cc9aba73241cfce488b1cb1c296",
+                {
+                    center: [24.7136, 46.6753],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 15,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_71c9b13f5689d11c6b69183cc308a01d = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_71c9b13f5689d11c6b69183cc308a01d.addTo(map_40c43cc9aba73241cfce488b1cb1c296);
+        
+    
+            var tile_layer_de851cc9e5b4bb857b225503aedde283 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detect_retina": false, "max_native_zoom": 19, "max_zoom": 19, "min_zoom": 0, "no_wrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+            var mini_map_fa2b51a978cef8f5b245ab477c1fc7cb = new L.Control.MiniMap(
+                tile_layer_de851cc9e5b4bb857b225503aedde283,
+                {
+  "position": "bottomright",
+  "width": 150,
+  "height": 150,
+  "collapsedWidth": 25,
+  "collapsedHeight": 25,
+  "zoomLevelOffset": -5,
+  "centerFixed": false,
+  "zoomAnimation": false,
+  "toggleDisplay": true,
+  "autoToggleDisplay": false,
+  "minimized": false,
+}
+            );
+            map_40c43cc9aba73241cfce488b1cb1c296.addControl(mini_map_fa2b51a978cef8f5b245ab477c1fc7cb);
+        
+    
+            var marker_1134f312e96e42188ad3b6c342f3c62b = L.marker(
+                [24.7136, 46.6753],
+                {
+}
+            ).addTo(map_40c43cc9aba73241cfce488b1cb1c296);
+        
+    
+            var icon_67c0741ee436904ee2bc6ac2fa9b097c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "exclamation-triangle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_281276d34d3e19b556e8bfa69b25c340 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_998f354dc7073832bc9e91529f182720 = $(`<div id="html_998f354dc7073832bc9e91529f182720" style="width: 100.0%; height: 100.0%;">     <div dir="rtl" style="font-family:Arial;font-size:14px;width:220px;line-height:1.8">         <b style="color:red;font-size:16px;">🚨 حادث مروري</b><br>         <b>📍 الموقع:</b> طريق الملك فهد، الرياض، المملكة العربية السعودية<br>         <b>🕐 الوقت:</b> 2026-06-27  01:09:04<br>         <b>🌐 الإحداثيات:</b><br>         &nbsp;&nbsp;24.713600°N &nbsp; 46.675300°E<br>         <a href="https://www.google.com/maps?q=24.7136,46.6753" target="_blank">         📌 افتح في Google Maps</a>     </div></div>`)[0];
+                popup_281276d34d3e19b556e8bfa69b25c340.setContent(html_998f354dc7073832bc9e91529f182720);
+            
+        
+
+        marker_1134f312e96e42188ad3b6c342f3c62b.bindPopup(popup_281276d34d3e19b556e8bfa69b25c340)
+        ;
+
+        
+    
+    
+            marker_1134f312e96e42188ad3b6c342f3c62b.bindTooltip(
+                `<div>
+                     🚨 موقع الحادث — انقر للتفاصيل
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1134f312e96e42188ad3b6c342f3c62b.setIcon(icon_67c0741ee436904ee2bc6ac2fa9b097c);
+            
+    
+            var circle_440cdad81e39b224e2848699bf4084f0 = L.circle(
+                [24.7136, 46.6753],
+                {"bubblingMouseEvents": true, "color": "#FF6600", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF6600", "fillOpacity": 0.12, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1000.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_40c43cc9aba73241cfce488b1cb1c296);
+        
+    
+        var popup_c7f3379b9d605b9c97c12e5ec4be0e9c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_63f4d3f315d7ea3dd70f70b93b47d26f = $(`<div id="html_63f4d3f315d7ea3dd70f70b93b47d26f" style="width: 100.0%; height: 100.0%;"><b>⚠️ منطقة التنبيه</b><br>جميع السائقين داخل هذا النطاق تلقّوا إشعاراً</div>`)[0];
+                popup_c7f3379b9d605b9c97c12e5ec4be0e9c.setContent(html_63f4d3f315d7ea3dd70f70b93b47d26f);
+            
+        
+
+        circle_440cdad81e39b224e2848699bf4084f0.bindPopup(popup_c7f3379b9d605b9c97c12e5ec4be0e9c)
+        ;
+
+        
+    
+    
+            circle_440cdad81e39b224e2848699bf4084f0.bindTooltip(
+                `<div>
+                     ⚠️ منطقة التنبيه — 1.0 كم
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9cfead79ab6ee1c30a4f9927626a30ee = L.marker(
+                [24.71970851598994, 46.67846442909603],
+                {
+}
+            ).addTo(map_40c43cc9aba73241cfce488b1cb1c296);
+        
+    
+            var icon_1de57d64db8e8768c16966d916636bbc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "car",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f6d117ac05405708e1db36015ddec63e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_10d70cc6110ef799a38242560271eeb6 = $(`<div id="html_10d70cc6110ef799a38242560271eeb6" style="width: 100.0%; height: 100.0%;"><div dir='rtl'><b>🚗 سائق قادم من الشمال</b><br>✅ تم إرسال تنبيه: <i>⚠️ حادث أمامك!</i></div></div>`)[0];
+                popup_f6d117ac05405708e1db36015ddec63e.setContent(html_10d70cc6110ef799a38242560271eeb6);
+            
+        
+
+        marker_9cfead79ab6ee1c30a4f9927626a30ee.bindPopup(popup_f6d117ac05405708e1db36015ddec63e)
+        ;
+
+        
+    
+    
+            marker_9cfead79ab6ee1c30a4f9927626a30ee.bindTooltip(
+                `<div>
+                     🚗 سائق — الشمال (تم تنبيهه)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9cfead79ab6ee1c30a4f9927626a30ee.setIcon(icon_1de57d64db8e8768c16966d916636bbc);
+            
+    
+            var marker_d06f071420d179a39627cd789d7518b9 = L.marker(
+                [24.715845777937478, 46.6708500215837],
+                {
+}
+            ).addTo(map_40c43cc9aba73241cfce488b1cb1c296);
+        
+    
+            var icon_acd56b2ec433d27deb9a103fd5a79418 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "car",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_34c133ac50ab24d0b21872e185fd7e4b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_015cc99a2f4e0272d28abb0250238ff3 = $(`<div id="html_015cc99a2f4e0272d28abb0250238ff3" style="width: 100.0%; height: 100.0%;"><div dir='rtl'><b>🚗 سائق قادم من الغرب</b><br>✅ تم إرسال تنبيه: <i>⚠️ حادث أمامك!</i></div></div>`)[0];
+                popup_34c133ac50ab24d0b21872e185fd7e4b.setContent(html_015cc99a2f4e0272d28abb0250238ff3);
+            
+        
+
+        marker_d06f071420d179a39627cd789d7518b9.bindPopup(popup_34c133ac50ab24d0b21872e185fd7e4b)
+        ;
+
+        
+    
+    
+            marker_d06f071420d179a39627cd789d7518b9.bindTooltip(
+                `<div>
+                     🚗 سائق — الغرب (تم تنبيهه)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d06f071420d179a39627cd789d7518b9.setIcon(icon_acd56b2ec433d27deb9a103fd5a79418);
+            
+    
+            var marker_a1477b02d13fd62d33c4f9855706930a = L.marker(
+                [24.710815235357526, 46.68103552773656],
+                {
+}
+            ).addTo(map_40c43cc9aba73241cfce488b1cb1c296);
+        
+    
+            var icon_caa61b5d6e633bee8625722d97ffcaae = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "car",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1f8fac6f178e05215d10162ebb39ea8d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6297b4b3d0285fa8e48eb08ae05a1c44 = $(`<div id="html_6297b4b3d0285fa8e48eb08ae05a1c44" style="width: 100.0%; height: 100.0%;"><div dir='rtl'><b>🚗 سائق قادم من الجنوب الشرقي</b><br>✅ تم إرسال تنبيه: <i>⚠️ حادث أمامك!</i></div></div>`)[0];
+                popup_1f8fac6f178e05215d10162ebb39ea8d.setContent(html_6297b4b3d0285fa8e48eb08ae05a1c44);
+            
+        
+
+        marker_a1477b02d13fd62d33c4f9855706930a.bindPopup(popup_1f8fac6f178e05215d10162ebb39ea8d)
+        ;
+
+        
+    
+    
+            marker_a1477b02d13fd62d33c4f9855706930a.bindTooltip(
+                `<div>
+                     🚗 سائق — الجنوب الشرقي (تم تنبيهه)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a1477b02d13fd62d33c4f9855706930a.setIcon(icon_caa61b5d6e633bee8625722d97ffcaae);
+            
+    
+            var marker_241223bd8ef4ef3b4309c5644e31ab4e = L.marker(
+                [24.70731182177506, 46.67332223181498],
+                {
+}
+            ).addTo(map_40c43cc9aba73241cfce488b1cb1c296);
+        
+    
+            var icon_ac02c9d1e9b4c85dee87a8f978d23e4e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "car",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_867153ed844e2e086f504edaae6d0de2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_299e20bd3c5ee9058048f808508931d7 = $(`<div id="html_299e20bd3c5ee9058048f808508931d7" style="width: 100.0%; height: 100.0%;"><div dir='rtl'><b>🚗 سائق قادم من الجنوب</b><br>✅ تم إرسال تنبيه: <i>⚠️ حادث أمامك!</i></div></div>`)[0];
+                popup_867153ed844e2e086f504edaae6d0de2.setContent(html_299e20bd3c5ee9058048f808508931d7);
+            
+        
+
+        marker_241223bd8ef4ef3b4309c5644e31ab4e.bindPopup(popup_867153ed844e2e086f504edaae6d0de2)
+        ;
+
+        
+    
+    
+            marker_241223bd8ef4ef3b4309c5644e31ab4e.bindTooltip(
+                `<div>
+                     🚗 سائق — الجنوب (تم تنبيهه)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_241223bd8ef4ef3b4309c5644e31ab4e.setIcon(icon_ac02c9d1e9b4c85dee87a8f978d23e4e);
+            
+    
+            var marker_646d173faae6a15c563a97d69ffa8881 = L.marker(
+                [24.723481422924902, 46.68419995683259],
+                {
+}
+            ).addTo(map_40c43cc9aba73241cfce488b1cb1c296);
+        
+    
+            var icon_6556b65142796deeda2bf10022d9b27a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plus-square",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1e8e7e6a7b8dbf3a7d6d72c8204a836b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ae8ecbd3d114c66f819f1e65dbdd18dc = $(`<div id="html_ae8ecbd3d114c66f819f1e65dbdd18dc" style="width: 100.0%; height: 100.0%;"><div dir='rtl'><b>🚑 الإسعاف</b><br>✅ تم الإبلاغ — في الطريق</div></div>`)[0];
+                popup_1e8e7e6a7b8dbf3a7d6d72c8204a836b.setContent(html_ae8ecbd3d114c66f819f1e65dbdd18dc);
+            
+        
+
+        marker_646d173faae6a15c563a97d69ffa8881.bindPopup(popup_1e8e7e6a7b8dbf3a7d6d72c8204a836b)
+        ;
+
+        
+    
+    
+            marker_646d173faae6a15c563a97d69ffa8881.bindTooltip(
+                `<div>
+                     🚑 الإسعاف
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_646d173faae6a15c563a97d69ffa8881.setIcon(icon_6556b65142796deeda2bf10022d9b27a);
+            
+    
+            var marker_1de318fe67cb91cf2e337f22adbae762 = L.marker(
+                [24.70551519942508, 46.667883369306175],
+                {
+}
+            ).addTo(map_40c43cc9aba73241cfce488b1cb1c296);
+        
+    
+            var icon_2820e500e221fd501c90794005b17b74 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "shield",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_eff4895b06129525795054503b190232 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_76ba008e78f830121dcd663803115b68 = $(`<div id="html_76ba008e78f830121dcd663803115b68" style="width: 100.0%; height: 100.0%;"><div dir='rtl'><b>🚔 إدارة المرور</b><br>✅ تم الإبلاغ — جاري التحرك</div></div>`)[0];
+                popup_eff4895b06129525795054503b190232.setContent(html_76ba008e78f830121dcd663803115b68);
+            
+        
+
+        marker_1de318fe67cb91cf2e337f22adbae762.bindPopup(popup_eff4895b06129525795054503b190232)
+        ;
+
+        
+    
+    
+            marker_1de318fe67cb91cf2e337f22adbae762.bindTooltip(
+                `<div>
+                     🚔 المرور
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1de318fe67cb91cf2e337f22adbae762.setIcon(icon_2820e500e221fd501c90794005b17b74);
+            
+</script>
+</html>

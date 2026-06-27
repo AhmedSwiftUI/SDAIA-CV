@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>نظام الرصد الذكي للطرق — Mobile</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { margin: 0; size: 105mm auto; }
+
+  body {
+    font-family: 'Tajawal', Arial, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    direction: rtl;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-size: 11px;
+  }
+
+  .page {
+    width: 105mm;
+    margin: 0 auto;
+    padding: 0 0 8mm;
+    background: #0f172a;
+  }
+
+  /* ══ هيدر ══ */
+  .header {
+    background: linear-gradient(160deg, #1e1b4b 0%, #312e81 100%);
+    padding: 10mm 6mm 8mm;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to left, #6366f1, #22d3ee, #6366f1);
+  }
+  .header h1 {
+    font-size: 17px; font-weight: 800; color: #fff; line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .header .sub {
+    font-size: 9.5px; color: #a5b4fc; line-height: 1.6; margin-bottom: 7px;
+  }
+  .header-meta {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 7px 9px;
+    font-size: 9px;
+    color: #94a3b8;
+    line-height: 1.9;
+  }
+  .header-meta strong { color: #e2e8f0; }
+
+  .authors-box {
+    margin-top: 7px;
+    background: rgba(99,102,241,0.15);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 8px;
+    padding: 6px 9px;
+    font-size: 9px;
+    color: #a5b4fc;
+  }
+  .authors-box .lbl { color: #64748b; display: block; margin-bottom: 3px; }
+  .authors-box .names { font-weight: 700; color: #e2e8f0; font-size: 10px; }
+
+  /* ══ body ══ */
+  .body { padding: 5mm 5mm 0; }
+
+  /* ══ قسم ══ */
+  .section { margin-bottom: 6mm; break-inside: avoid; page-break-inside: avoid; }
+
+  .sec-title {
+    display: flex; align-items: center; gap: 0;
+    font-size: 11.5px; font-weight: 700; color: #e2e8f0;
+    margin-bottom: 4mm;
+  }
+  .sec-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #4f46e5; color: #fff;
+    border-radius: 50%; width: 20px; height: 20px;
+    font-size: 10px; font-weight: 800;
+    margin-left: 7px; flex-shrink: 0;
+  }
+  .sec-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to left, #4f46e5, transparent);
+    margin-right: 8px;
+  }
+
+  p {
+    font-size: 10.5px; color: #94a3b8; line-height: 1.85;
+  }
+  p strong { color: #e2e8f0; }
+
+  /* ══ النموذج — بطاقات عمودية ══ */
+  .model-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
+  }
+  .model-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 5mm 4mm;
+    text-align: center;
+  }
+  .model-lbl { font-size: 8.5px; color: #64748b; margin-bottom: 3px; }
+  .model-val { font-size: 13px; font-weight: 800; color: #6366f1; line-height: 1.2; }
+
+  /* ══ Pipeline — عمودي ══ */
+  .pipeline { display: flex; flex-direction: column; gap: 0; }
+  .pipe-row {
+    display: flex; align-items: center; gap: 3mm;
+  }
+  .pipe-num {
+    display: flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: #4f46e5; color: #fff;
+    font-size: 12px; font-weight: 800; flex-shrink: 0;
+  }
+  .pipe-content {
+    flex: 1;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 4mm 4mm;
+  }
+  .pipe-title { font-size: 10.5px; font-weight: 700; color: #a5b4fc; }
+  .pipe-sub   { font-size: 9px; color: #64748b; margin-top: 1px; }
+  .pipe-connector {
+    width: 26px; display: flex; justify-content: center;
+    flex-shrink: 0;
+  }
+  .pipe-connector::before {
+    content: '';
+    width: 2px; height: 5mm;
+    background: #334155;
+    display: block;
+  }
+
+  /* ══ بطاقات المكتبات ══ */
+  .lib-list { display: flex; flex-direction: column; gap: 2.5mm; }
+  .lib-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 4mm;
+    display: flex; align-items: flex-start; gap: 3mm;
+    break-inside: avoid; page-break-inside: avoid;
+  }
+  .lib-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #4f46e5; flex-shrink: 0; margin-top: 3px;
+  }
+  .lib-dot.g { background: #10b981; }
+  .lib-dot.o { background: #f59e0b; }
+  .lib-dot.r { background: #ef4444; }
+  .lib-dot.c { background: #22d3ee; }
+  .lib-dot.y { background: #a3e635; }
+  .lib-name {
+    font-family: 'Courier New', monospace;
+    font-size: 10px; font-weight: 700; color: #6366f1;
+    direction: ltr; margin-bottom: 2px;
+  }
+  .lib-desc  { font-size: 9.5px; color: #94a3b8; line-height: 1.5; }
+  .lib-role  {
+    margin-top: 3px;
+    display: inline-block;
+    background: rgba(99,102,241,0.15);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 8.5px; color: #a5b4fc;
+  }
+
+  /* ══ بطاقات الملفات ══ */
+  .file-list { display: flex; flex-direction: column; gap: 2.5mm; }
+  .fc {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-right: 3px solid #4f46e5;
+    border-radius: 8px;
+    padding: 4mm;
+    break-inside: avoid; page-break-inside: avoid;
+  }
+  .fc.g { border-right-color: #10b981; }
+  .fc.o { border-right-color: #f59e0b; }
+  .fc.r { border-right-color: #ef4444; }
+  .fc.c { border-right-color: #22d3ee; }
+  .fn {
+    font-family: 'Courier New', monospace;
+    font-size: 10px; font-weight: 700; color: #a5b4fc;
+    direction: ltr; margin-bottom: 3px;
+  }
+  .fd { font-size: 9.5px; color: #64748b; line-height: 1.5; }
+
+  /* ══ كود ══ */
+  .code-block {
+    background: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 4mm;
+    font-family: 'Courier New', monospace;
+    font-size: 9.5px;
+    direction: ltr; text-align: left;
+    line-height: 2;
+    break-inside: avoid; page-break-inside: avoid;
+  }
+  .cm  { color: #334155; }
+  .cmd { color: #34d399; }
+  .arg { color: #fbbf24; }
+
+  /* ══ فوتر ══ */
+  .footer {
+    margin: 5mm 5mm 0;
+    border-top: 1px solid #1e293b;
+    padding-top: 4mm;
+    font-size: 8px; color: #334155;
+    text-align: center; line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- هيدر -->
+  <div class="header">
+    <h1>نظام الرصد الذكي للطرق</h1>
+    <div class="sub">كشف الحوادث المرورية وتلف الطريق<br>باستخدام رؤية الحاسب والذكاء الاصطناعي</div>
+    <div class="header-meta">
+      <div><strong>دورة رؤية الحاسب للمطورين</strong> — مقدمة من <strong>سدايا</strong></div>
+      <div>المدرب: <strong>د. أحمد عبدالفتاح</strong></div>
+    </div>
+    <div class="authors-box">
+      <span class="lbl">المشروع بواسطة</span>
+      <span class="names">أحمد الحربي &nbsp;·&nbsp; هياء الدوسري &nbsp;·&nbsp; ريماس المري</span>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- ١ نظرة عامة -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">١</span> نظرة عامة <div class="sec-line"></div></div>
+      <p>
+        نظام ذكي يرصد الحوادث المرورية وتلف الطريق تلقائياً من خلال تحليل
+        مقاطع فيديو الداش كام، باستخدام نموذج <strong>YOLOv8</strong> المدرَّب
+        على بيانات حقيقية. يشمل واجهة عربية تفاعلية مع خريطة جغرافية
+        وتنبيهات فورية لجهات الاختصاص.
+      </p>
+    </div>
+
+    <!-- ٢ النموذج -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">٢</span> نموذج الذكاء الاصطناعي <div class="sec-line"></div></div>
+      <div class="model-grid">
+        <div class="model-card">
+          <div class="model-lbl">اسم النموذج</div>
+          <div class="model-val">YOLOv8s</div>
+        </div>
+        <div class="model-card">
+          <div class="model-lbl">نوع المهمة</div>
+          <div class="model-val">Object Detection</div>
+        </div>
+        <div class="model-card">
+          <div class="model-lbl">دورات التدريب</div>
+          <div class="model-val">30 Epoch</div>
+        </div>
+        <div class="model-card">
+          <div class="model-lbl">حجم الصورة</div>
+          <div class="model-val">640 × 640</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ٣ Pipeline -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">٣</span> خطوات عمل النظام <div class="sec-line"></div></div>
+      <div class="pipeline">
+        <div class="pipe-row">
+          <div class="pipe-num">1</div>
+          <div class="pipe-content">
+            <div class="pipe-title">Data Collection</div>
+            <div class="pipe-sub">Roboflow — جمع البيانات وتصنيفها</div>
+          </div>
+        </div>
+        <div class="pipe-row"><div class="pipe-connector"></div><div style="flex:1"></div></div>
+        <div class="pipe-row">
+          <div class="pipe-num">2</div>
+          <div class="pipe-content">
+            <div class="pipe-title">Model Training</div>
+            <div class="pipe-sub">YOLOv8 — تدريب النموذج</div>
+          </div>
+        </div>
+        <div class="pipe-row"><div class="pipe-connector"></div><div style="flex:1"></div></div>
+        <div class="pipe-row">
+          <div class="pipe-num">3</div>
+          <div class="pipe-content">
+            <div class="pipe-title">Video Processing</div>
+            <div class="pipe-sub">OpenCV — معالجة الفيديو إطاراً بإطار</div>
+          </div>
+        </div>
+        <div class="pipe-row"><div class="pipe-connector"></div><div style="flex:1"></div></div>
+        <div class="pipe-row">
+          <div class="pipe-num">4</div>
+          <div class="pipe-content">
+            <div class="pipe-title">Detection &amp; Confirmation</div>
+            <div class="pipe-sub">الكشف والتأكيد قبل الإنذار</div>
+          </div>
+        </div>
+        <div class="pipe-row"><div class="pipe-connector"></div><div style="flex:1"></div></div>
+        <div class="pipe-row">
+          <div class="pipe-num">5</div>
+          <div class="pipe-content">
+            <div class="pipe-title">Alert &amp; Map</div>
+            <div class="pipe-sub">Folium + Email — التنبيه والخريطة</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ٤ المكتبات -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">٤</span> المكتبات والأدوات <div class="sec-line"></div></div>
+      <div class="lib-list">
+        <div class="lib-card">
+          <div class="lib-dot"></div>
+          <div>
+            <div class="lib-name">ultralytics (YOLOv8)</div>
+            <div class="lib-desc">تدريب نموذج الكشف وتشغيله على الفيديو</div>
+            <span class="lib-role">نماذج الكشف عن الأجسام</span>
+          </div>
+        </div>
+        <div class="lib-card">
+          <div class="lib-dot g"></div>
+          <div>
+            <div class="lib-name">opencv-python</div>
+            <div class="lib-desc">قراءة الفيديو ومعالجة الإطارات والتعليق عليها</div>
+            <span class="lib-role">معالجة الصور والفيديو</span>
+          </div>
+        </div>
+        <div class="lib-card">
+          <div class="lib-dot o"></div>
+          <div>
+            <div class="lib-name">torch (PyTorch)</div>
+            <div class="lib-desc">المحرك الأساسي للتعلم العميق الذي يعتمد عليه YOLOv8</div>
+            <span class="lib-role">أساسيات التعلم العميق</span>
+          </div>
+        </div>
+        <div class="lib-card">
+          <div class="lib-dot c"></div>
+          <div>
+            <div class="lib-name">roboflow</div>
+            <div class="lib-desc">تحميل مجموعة البيانات المصنّفة لتدريب النموذج</div>
+            <span class="lib-role">جمع البيانات وتصنيفها</span>
+          </div>
+        </div>
+        <div class="lib-card">
+          <div class="lib-dot"></div>
+          <div>
+            <div class="lib-name">numpy</div>
+            <div class="lib-desc">التعامل مع بيانات الصور كمصفوفات رقمية</div>
+            <span class="lib-role">أساسيات معالجة الصور</span>
+          </div>
+        </div>
+        <div class="lib-card">
+          <div class="lib-dot g"></div>
+          <div>
+            <div class="lib-name">pillow (PIL)</div>
+            <div class="lib-desc">رسم النصوص العربية على إطارات الفيديو</div>
+            <span class="lib-role">التعديل على الصور</span>
+          </div>
+        </div>
+        <div class="lib-card">
+          <div class="lib-dot o"></div>
+          <div>
+            <div class="lib-name">streamlit</div>
+            <div class="lib-desc">بناء واجهة لوحة التحكم التفاعلية بالعربي</div>
+            <span class="lib-role">نشر النماذج وعرض النتائج</span>
+          </div>
+        </div>
+        <div class="lib-card">
+          <div class="lib-dot r"></div>
+          <div>
+            <div class="lib-name">folium + plotly</div>
+            <div class="lib-desc">خريطة تفاعلية ورسوم بيانية في لوحة التحكم</div>
+            <span class="lib-role">عرض وتصوير النتائج</span>
+          </div>
+        </div>
+        <div class="lib-card">
+          <div class="lib-dot y"></div>
+          <div>
+            <div class="lib-name">arabic-reshaper + python-bidi</div>
+            <div class="lib-desc">دعم عرض النص العربي بشكل صحيح داخل OpenCV</div>
+            <span class="lib-role">التعليق على الصور بالعربي</span>
+          </div>
+        </div>
+        <div class="lib-card">
+          <div class="lib-dot"></div>
+          <div>
+            <div class="lib-name">smtplib</div>
+            <div class="lib-desc">إرسال تنبيهات بالبريد الإلكتروني عند رصد حادث</div>
+            <span class="lib-role">منظومة الإنذار الآلي</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ٥ الملفات -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">٥</span> سكريبتات المشروع <div class="sec-line"></div></div>
+      <div class="file-list">
+        <div class="fc">
+          <div class="fn">1_train.py</div>
+          <div class="fd">تحميل البيانات من Roboflow وتدريب YOLOv8s وقياس دقة النموذج</div>
+        </div>
+        <div class="fc g">
+          <div class="fn">2_detect.py</div>
+          <div class="fd">تشغيل النموذج على فيديو الداش كام وإرسال تنبيه عند تأكيد الحادث</div>
+        </div>
+        <div class="fc o">
+          <div class="fn">app.py</div>
+          <div class="fd">لوحة تحكم Streamlit كاملة بالعربي لكشف الحوادث وتلف الطريق</div>
+        </div>
+        <div class="fc c">
+          <div class="fn">utils/map_utils.py</div>
+          <div class="fd">خريطة Folium تعرض موقع الحادث مع دائرة تنبيه بنصف قطر 1 كم</div>
+        </div>
+        <div class="fc r">
+          <div class="fn">utils/road_damage_utils.py</div>
+          <div class="fd">كشف تلف الطريق (حفر وتشققات) وعرض النتائج بالعربي</div>
+        </div>
+        <div class="fc">
+          <div class="fn">utils/notify_utils.py</div>
+          <div class="fd">إرسال بريد إلكتروني للإسعاف والمرور يحتوي الوقت والموقع</div>
+        </div>
+        <div class="fc g">
+          <div class="fn">config.py</div>
+          <div class="fd">ملف الإعدادات المركزي للمسارات والمعاملات وبيانات Roboflow</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ٦ التشغيل -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">٦</span> تشغيل المشروع <div class="sec-line"></div></div>
+      <div class="code-block">
+<span class="cm"># ① تثبيت المكتبات</span>
+<span class="cmd">pip install</span> <span class="arg">-r requirements.txt</span>
+
+<span class="cm"># ② تدريب النموذج (مرة واحدة)</span>
+<span class="cmd">python3</span> <span class="arg">1_train.py</span>
+
+<span class="cm"># ③ الكشف على فيديو</span>
+<span class="cmd">python3</span> <span class="arg">2_detect.py videos/accident_video.mp4</span>
+
+<span class="cm"># ④ تشغيل لوحة التحكم</span>
+<span class="cmd">streamlit run</span> <span class="arg">app.py</span></div>
+    </div>
+
+    <!-- ٧ الخلاصة -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">٧</span> الخلاصة <div class="sec-line"></div></div>
+      <p>
+        تطبيق عملي شامل لمفاهيم دورة رؤية الحاسب للمطورين المقدمة من سدايا،
+        يربط بين جمع البيانات وتدريب النموذج وعرض النتائج في منظومة متكاملة،
+        قابلة للتوسع نحو تطبيقات المدن الذكية والسلامة المرورية.
+      </p>
+    </div>
+
+  </div><!-- /body -->
+
+  <div class="footer">
+    <div>أحمد الحربي · هياء الدوسري · ريماس المري</div>
+    <div>دورة رؤية الحاسب للمطورين — سدايا · ٢٠٢٦</div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>

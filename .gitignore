@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Dataset (كبيرة جداً — حمّلها من Roboflow)
+data/
+
+# نتائج التدريب (تُنتَج تلقائياً)
+runs/
+
+# ملفات مؤقتة وإخراج
+output/*.json
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+.AppleDouble
+
+# IDE
+.vscode/
+.idea/
+
+# Secrets — لا ترفع API Keys
+.env
